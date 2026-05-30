@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cùng Viết Mỗi Ngày</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --paper:       #F9EEE2;
+    --paper-warm:  #FBE0D2;
+    --paper-mid:   #F8C5AD;
+    --paper-deep:  #FFCBBC;
+    --terra:       #DDB398;
+    --terra-dark:  #b8896a;
+    --terra-text:  #6b4a32;
+    --ink:         #3d2b1f;
+    --ink-muted:   #7a5c48;
+    --ink-faint:   #b89880;
+    --serif: 'Lora', Georgia, serif;
+    --body: 'Crimson Pro', 'Garamond', serif;
+    --r: 7px;
+  }
+
+  body {
+    font-family: var(--body);
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 17px;
+    line-height: 1.7;
+    padding: 0;
+  }
+
+  .page-wrap {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 3rem 2rem 4rem;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    text-align: center;
+    margin-bottom: 0;
+  }
+
+  .header-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .header-title {
+    font-family: var(--serif);
+    font-size: clamp(26px, 5.5vw, 42px);
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 0;
+  }
+
+  .header-sub {
+    font-size: 14px;
+    color: var(--ink-faint);
+    font-style: italic;
+    margin-top: 0.35rem;
+    min-height: 18px;
+  }
+
+  /* ── EDITION STRIP ── */
+  .edition-strip {
+    display: flex;
+    align-items: center;
+    margin: 1.8rem 0 0;
+    background: var(--terra);
+    border-radius: var(--r) var(--r) 0 0;
+    padding: 0.65rem 1.3rem;
+  }
+
+  .edition-lan {
+    font-family: var(--serif);
+    font-size: 13px;
+    font-weight: 400;
+    color: #fff;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    flex: 1;
+  }
+
+  .edition-date {
+    font-family: var(--body);
+    font-style: italic;
+    font-size: 15px;
+    color: rgba(255,255,255,0.7);
+  }
+
+  /* ── METRICS ── */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--paper-mid);
+    border: 1px solid var(--paper-mid);
+    border-top: none;
+    border-radius: 0 0 var(--r) var(--r);
+    overflow: hidden;
+    margin-bottom: 1.8rem;
+  }
+
+  .metric-card {
+    background: var(--paper-warm);
+    padding: 1rem 1.1rem;
+    text-align: center;
+  }
+
+  .metric-label {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 6px;
+  }
+
+  .metric-value {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  /* ── TOTAL BANNER ── */
+  .total-banner {
+    background: var(--paper-deep);
+    border: 1px solid var(--paper-mid);
+    border-radius: var(--r);
+    padding: 1.3rem 1.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .total-label {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--terra-text);
+    margin-bottom: 5px;
+  }
+
+  .total-value {
+    font-family: var(--serif);
+    font-size: 40px;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .total-sub {
+    font-size: 13px;
+    color: var(--ink-muted);
+    margin-top: 5px;
+    font-style: italic;
+  }
+
+  .total-ornament {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 52px;
+    color: var(--terra);
+    line-height: 1;
+    user-select: none;
+    opacity: 0.5;
+  }
+
+  /* ── SECTION TITLE ── */
+  .section-title {
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--ink-muted);
+    margin-bottom: 1.1rem;
+    font-style: italic;
+  }
+
+  /* ── DOT GRID ── */
+  .dot-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(108px, 1fr));
+    gap: 7px;
+    margin-bottom: 2.5rem;
+  }
+
+  .dot-cell {
+    background: #fff9f5;
+    border: 1px solid var(--paper-mid);
+    border-radius: 5px;
+    padding: 8px 9px 9px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.15s;
+  }
+
+  .dot-cell:hover { border-color: var(--terra); }
+
+  .dot-cell.latest {
+    background: #fff4ef;
+    border-color: var(--terra);
+  }
+
+  .dot-fill {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: var(--terra);
+    opacity: 0.13;
+  }
+
+  .dot-cell.latest .dot-fill {
+    opacity: 0.22;
+  }
+
+  .dot-lan {
+    font-size: 10px;
+    color: var(--ink-faint);
+    letter-spacing: 0.05em;
+    position: relative;
+    text-transform: uppercase;
+  }
+
+  .dot-date {
+    font-size: 12px;
+    color: var(--ink-muted);
+    font-style: italic;
+    position: relative;
+    line-height: 1.2;
+    margin-top: 1px;
+  }
+
+  .dot-tu {
+    font-family: var(--serif);
+    font-size: 14px;
+    color: var(--ink);
+    font-weight: 400;
+    position: relative;
+    margin-top: 5px;
+    line-height: 1;
+  }
+
+  .dot-cell.latest .dot-tu { color: var(--terra-dark); }
+
+  .dot-bai {
+    font-size: 11px;
+    color: var(--ink-faint);
+    position: relative;
+    margin-top: 2px;
+  }
+
+  /* ── ERROR ── */
+  .error-note {
+    background: #fdf4f4;
+    border: 1px solid #e8c8c8;
+    border-radius: var(--r);
+    padding: 0.8rem 1.1rem;
+    font-size: 13px;
+    color: #8b4a4a;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+  }
+
+  /* ── FOOTER ── */
+  .footer-note {
+    border-top: 1px solid var(--paper-mid);
+    padding-top: 1.5rem;
+    font-size: 13px;
+    color: var(--ink-faint);
+    font-style: italic;
+    text-align: center;
+    line-height: 1.9;
+    margin-top: 2rem;
+  }
+  .footer-note a { color: var(--terra-dark); text-decoration: none; }
+
+  @media (max-width: 480px) {
+    .page-wrap { padding: 1.8rem 1rem 2.5rem; }
+    .metric-value { font-size: 20px; }
+    .total-value { font-size: 30px; }
+    .total-ornament { display: none; }
+    .dot-grid { grid-template-columns: repeat(auto-fill, minmax(88px,1fr)); gap: 5px; }
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <header class="header">
+    <p class="header-eyebrow">FILE VIẾT CHUNG</p>
+    <h1 class="header-title">Cùng Viết Mỗi Ngày</h1>
+    <p class="header-sub" id="headerSub">Thực tập của cộng đồng Viết Để Tự Do</p>
+  </header>
+
+  
+
+  <div class="edition-strip">
+    <span class="edition-lan" id="editionLan">Lần thứ —</span>
+    <span class="edition-date" id="editionDate">Tháng —</span>
+  </div>
+
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <p class="metric-label">Lượt viết</p>
+      <p class="metric-value" id="mBai">—</p>
+    </div>
+    <div class="metric-card">
+      <p class="metric-label">Số trang</p>
+      <p class="metric-value" id="mTrang">—</p>
+    </div>
+    <div class="metric-card">
+      <p class="metric-label">Số từ</p>
+      <p class="metric-value" id="mTuThang">—</p>
+    </div>
+  </div>
+
+  <div class="total-banner">
+    <div>
+      <p class="total-label">Tổng số thực hành từ lần 1 đến nay</p>
+      <p class="total-value" id="mTongTu">—</p>
+      <p class="total-sub" id="mTongSub">—</p>
+    </div>
+    <span class="total-ornament" aria-hidden="true">∞</span>
+  </div>
+
+  <div>
+    <p class="section-title">Hành trình mỗi tháng</p>
+    <div class="dot-grid" id="dotGrid"></div>
+  </div>
+
+  <p class="footer-note">
+    Số liệu cập nhật hàng tháng<br>
+    Mỗi con số là một lần ngồi xuống, viết, và hiện diện với chính mình.<br>
+    <a href="https://vietdetudo.com" target="_blank">vietdetudo.com</a>
+  </p>
+
+</div>
+<script>
+const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR88xCPOKKYHV-JvqiCx5IodhSZ6cmvglKmbX_lV0QE34Odf4kAYyfWS5__bdEP5R25iCBnHYbuooC_/pub?gid=0&single=true&output=csv';
+
+const FALLBACK = [
+  {lan:1,date:'8/2021',bai:75,trang:160,tu:93000},
+  {lan:2,date:'9/2021',bai:97,trang:222,tu:130164},
+  {lan:3,date:'10/2021',bai:123,trang:248,tu:153633},
+  {lan:4,date:'11/2021',bai:119,trang:231,tu:141479},
+  {lan:5,date:'12/2021',bai:132,trang:248,tu:141265},
+  {lan:6,date:'4/2022',bai:108,trang:189,tu:110000},
+  {lan:7,date:'5/2022',bai:113,trang:186,tu:102000},
+  {lan:8,date:'6/2022',bai:160,trang:310,tu:181832},
+  {lan:9,date:'7/2022',bai:200,trang:316,tu:162724},
+  {lan:10,date:'8/2022',bai:99,trang:148,tu:80743},
+  {lan:11,date:'9/2022',bai:145,trang:248,tu:141100},
+  {lan:12,date:'10/2022',bai:138,trang:224,tu:128712},
+  {lan:13,date:'11/2022',bai:165,trang:284,tu:156782},
+  {lan:14,date:'12/2022',bai:205,trang:336,tu:180332},
+  {lan:15,date:'1/2023',bai:104,trang:229,tu:113197},
+  {lan:16,date:'2/2023',bai:175,trang:329,tu:155876},
+  {lan:17,date:'3/2023',bai:212,trang:423,tu:209788},
+  {lan:18,date:'4/2023',bai:156,trang:319,tu:156272},
+  {lan:19,date:'5/2023',bai:173,trang:367,tu:178816},
+  {lan:20,date:'6/2023',bai:222,trang:467,tu:219377},
+  {lan:21,date:'7/2023',bai:212,trang:419,tu:193547},
+  {lan:22,date:'8/2023',bai:209,trang:424,tu:193751},
+  {lan:23,date:'9/2023',bai:161,trang:325,tu:149111},
+  {lan:24,date:'10/2023',bai:98,trang:218,tu:97189},
+  {lan:25,date:'11/2023',bai:81,trang:173,tu:78217},
+  {lan:26,date:'12/2023',bai:66,trang:139,tu:62302},
+  {lan:27,date:'1/2024',bai:81,trang:152,tu:67450},
+  {lan:28,date:'2/2024',bai:80,trang:152,tu:71169},
+  {lan:29,date:'3/2024',bai:133,trang:254,tu:110025},
+  {lan:30,date:'4/2024',bai:142,trang:296,tu:135022},
+  {lan:31,date:'5/2024',bai:139,trang:271,tu:110696},
+  {lan:32,date:'6/2024',bai:121,trang:243,tu:105772},
+  {lan:33,date:'7/2024',bai:121,trang:235,tu:107501},
+  {lan:34,date:'8/2024',bai:148,trang:265,tu:110654},
+  {lan:35,date:'9/2024',bai:134,trang:276,tu:129910},
+  {lan:36,date:'10/2024',bai:592,trang:1191,tu:603829},
+  {lan:37,date:'11/2024',bai:205,trang:351,tu:181399},
+  {lan:38,date:'12/2024',bai:134,trang:267,tu:111483},
+  {lan:39,date:'1/2025',bai:98,trang:213,tu:90125},
+  {lan:40,date:'2/2025',bai:61,trang:117,tu:51574},
+  {lan:41,date:'3/2025',bai:115,trang:244,tu:108052},
+  {lan:42,date:'4/2025',bai:121,trang:236,tu:104657},
+  {lan:43,date:'5/2025',bai:177,trang:364,tu:161019},
+  {lan:44,date:'6/2025',bai:173,trang:282,tu:157114},
+  {lan:45,date:'7/2025',bai:168,trang:310,tu:135948},
+  {lan:46,date:'8/2025',bai:179,trang:409,tu:191140},
+  {lan:47,date:'9/2025',bai:351,trang:537,tu:292710},
+  {lan:48,date:'10/2025',bai:300,trang:614,tu:301454},
+  {lan:49,date:'11/2025',bai:207,trang:424,tu:243821},
+  {lan:50,date:'12/2025',bai:300,trang:567,tu:279683},
+  {lan:51,date:'1/2026',bai:182,trang:426,tu:210136},
+  {lan:52,date:'2/2026',bai:173,trang:374,tu:163922},
+  {lan:53,date:'3/2026',bai:162,trang:284,tu:123502},
+  {lan:54,date:'4/2026',bai:139,trang:336,tu:146720},
+];
+
+function fmt(n) {
+  if (n == null || n === '' || isNaN(n)) return '—';
+  return Number(n).toLocaleString('vi-VN');
+}
+
+function parseCSV(text) {
+  const lines = text.trim().split('\n');
+  const result = [];
+  for (const line of lines) {
+    const cols = line.split(',').map(s => s.trim().replace(/^"|"$/g,''));
+    const lan = parseInt(cols[0]);
+    if (isNaN(lan) || lan <= 0) continue;
+    const date = cols[1];
+    const bai  = parseInt(cols[2]);
+    const trang = parseInt(cols[3]);
+    const tu   = parseInt(cols[4]);
+    if (!date || isNaN(tu) || tu <= 0) continue;
+    result.push({ lan, date, bai: isNaN(bai)?0:bai, trang: isNaN(trang)?0:trang, tu });
+  }
+  return result;
+}
+
+async function fetchWithTimeout(url, ms) {
+  const ctrl = new AbortController();
+  const tid = setTimeout(() => ctrl.abort(), ms);
+  try {
+    const resp = await fetch(url, { signal: ctrl.signal });
+    clearTimeout(tid);
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    return await resp.text();
+  } catch(e) {
+    clearTimeout(tid);
+    throw e;
+  }
+}
+
+async function fetchData() {
+  const enc = encodeURIComponent(SHEET_URL);
+  const PROXIES = [
+    SHEET_URL,
+    'https://corsproxy.io/?' + enc,
+    'https://api.allorigins.win/raw?url=' + enc,
+    'https://api.codetabs.com/v1/proxy?quest=' + enc,
+  ];
+
+  for (const url of PROXIES) {
+    try {
+      const text = await fetchWithTimeout(url, 6000);
+      if (!text || text.trim().length < 20) continue;
+      const rows = parseCSV(text);
+      if (rows.length < 3) continue;
+      document.getElementById('headerSub').textContent =
+        'Thực tập của cộng đồng Viết Để Tự Do · cập nhật ' +
+        new Date().toLocaleDateString('vi-VN', {day:'2-digit', month:'2-digit', year:'numeric'});
+      return rows;
+    } catch(e) {
+      continue;
+    }
+  }
+
+  return FALLBACK;
+}
+
+function render(rows) {
+  if (!rows.length) return;
+  const last      = rows[rows.length - 1];
+  const tongTu    = rows.reduce((s,r) => s + (r.tu||0), 0);
+  const tongBai   = rows.reduce((s,r) => s + (r.bai||0), 0);
+  const tongTrang = rows.reduce((s,r) => s + (r.trang||0), 0);
+
+  document.getElementById('editionLan').textContent  = 'Lần thứ ' + last.lan;
+  document.getElementById('editionDate').textContent = 'Tháng ' + last.date;
+  document.getElementById('mBai').textContent        = fmt(last.bai);
+  document.getElementById('mTrang').textContent      = fmt(last.trang);
+  document.getElementById('mTuThang').textContent    = fmt(last.tu);
+  document.getElementById('mTongTu').textContent     = fmt(tongTu) + ' từ';
+  document.getElementById('mTongSub').textContent    =
+    fmt(tongBai) + ' lượt viết · ' + fmt(tongTrang) + ' trang · ' + rows.length + ' tháng';
+
+  const maxTu   = Math.max(...rows.map(r => r.tu||0));
+  const lastLan = last.lan;
+  let html = '';
+  for (const r of rows) {
+    const pct = maxTu > 0 ? Math.round((r.tu / maxTu) * 100) : 0;
+    const hi  = r.lan === lastLan;
+    html += `<div class="dot-cell${hi?' latest':''}">
+      <div class="dot-fill" style="height:${pct}%"></div>
+      <div class="dot-lan">Lần ${r.lan}</div>
+      <div class="dot-date">${r.date}</div>
+      <div class="dot-tu">${fmt(r.tu)}</div>
+      <div class="dot-bai">${fmt(r.bai)} bài</div>
+    </div>`;
+  }
+  document.getElementById('dotGrid').innerHTML = html;
+}
+
+(async () => { render(await fetchData()); })();
+</script>
+</body>
+</html>
